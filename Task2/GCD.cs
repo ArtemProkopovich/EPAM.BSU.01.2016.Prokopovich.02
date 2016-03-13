@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Task2
 {
     public static class Gcd
     {
-        public static int Euclid(int num1, int num2)
+        public static int Euclid(int num1, int num2, out TimeSpan elapsedTime)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             if (num1 < 0 || num2 < 0)
                 throw new ArgumentException("Передаваемые параметры должны быть больше нуля");
             while (num2 != 0)
@@ -18,6 +21,8 @@ namespace Task2
                 num1 = num2;
                 num2 = tmp;
             }
+            sw.Stop();
+            elapsedTime = sw.Elapsed;
             return num1;
         }
 
@@ -38,8 +43,10 @@ namespace Task2
             return result;
         }
 
-        public static int Stein(int num1, int num2)
+        public static int Stein(int num1, int num2, out TimeSpan elapsedTime)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             if (num1 < 0 || num2 < 0)
                 throw new ArgumentException("Передаваемые параметры должны быть больше нуля");
             int k = 1;
@@ -57,6 +64,8 @@ namespace Task2
                     num1 -= num2;
                 else num2 -= num1;
             }
+            sw.Stop();
+            elapsedTime = sw.Elapsed;
             return num2*k;
         }
 
