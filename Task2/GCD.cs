@@ -13,16 +13,28 @@ namespace Task2
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
+            int result = Euclid(num1, num2); 
+            sw.Stop();
+            elapsedTime = sw.Elapsed;
+            return result;
+        }
+
+        public static int Euclid(int num1, int num2)
+        {
             if (num1 < 0 || num2 < 0)
                 throw new ArgumentException("Передаваемые параметры должны быть больше нуля");
+            if (num2 < num1)
+            {
+                int tmp = num1;
+                num1 = num2;
+                num2 = tmp;
+            }
             while (num2 != 0)
             {
                 int tmp = num1 % num2;
                 num1 = num2;
                 num2 = tmp;
             }
-            sw.Stop();
-            elapsedTime = sw.Elapsed;
             return num1;
         }
 
@@ -47,9 +59,21 @@ namespace Task2
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
+            int result = Stein(num1, num2);
+            sw.Stop();
+            elapsedTime = sw.Elapsed;
+            return result;
+        }
+
+        public static int Stein(int num1, int num2)
+        {
             if (num1 < 0 || num2 < 0)
                 throw new ArgumentException("Передаваемые параметры должны быть больше нуля");
             int k = 1;
+            if (num1 == 0)
+                return num2;
+            if (num2 == 0)
+                return num1;
             while ((num1 != 0) && (num2 != 0))
             {
                 while ((num1 % 2 == 0) && (num2 % 2 == 0))
@@ -64,8 +88,6 @@ namespace Task2
                     num1 -= num2;
                 else num2 -= num1;
             }
-            sw.Stop();
-            elapsedTime = sw.Elapsed;
             return num2*k;
         }
 
