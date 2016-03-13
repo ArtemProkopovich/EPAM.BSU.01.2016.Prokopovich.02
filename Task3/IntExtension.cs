@@ -20,6 +20,7 @@ namespace Task3
                 result += (mod < 10) ? mod : (char) (A + mod - 10);
                 number /= 16;
             }
+            result = new string (result.Reverse().ToArray());
             return result;
         }
     }
