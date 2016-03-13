@@ -12,14 +12,21 @@ namespace Task3
         {
             if (number == 0)
                 return "0";
+            bool neg = number < 0;
+            number = Math.Abs(number);
             char A = 'A';
             string result = "";
             while (number != 0)
             {
                 int mod = number%16;
-                result += (mod < 10) ? mod : (char) (A + mod - 10);
+                if (mod < 10)
+                    result += mod;
+                else
+                    result += (char) (A + mod - 10);
                 number /= 16;
             }
+            if (neg)
+                result += '-';
             result = new string (result.Reverse().ToArray());
             return result;
         }

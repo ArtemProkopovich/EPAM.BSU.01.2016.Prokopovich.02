@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Task3_MSUnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public class HexFormat_Test
     {
         [TestMethod]
-        public void TestMethod1()
+        public void HexFormat_TestMethod()
         {
         }
     }
