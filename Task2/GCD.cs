@@ -9,14 +9,11 @@ namespace Task2
 {
     public static class Gcd
     {
+        private delegate int GCDDelegate(int a, int b);
+
         public static int Euclid(int num1, int num2, out TimeSpan elapsedTime)
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            int result = Euclid(num1, num2); 
-            sw.Stop();
-            elapsedTime = sw.Elapsed;
-            return result;
+            return GCDTime(Euclid, num1, num2, out elapsedTime);
         }
 
         public static int Euclid(int num1, int num2)
@@ -40,29 +37,17 @@ namespace Task2
 
         public static int Euclid(int num1, int num2, int num3)
         {
-            return Euclid(Euclid(num1, num2), num3);
+            return ThreeNumbersGCD(Euclid, num1, num2, num3);
         }
 
         public static int Euclid(params int[] array)
         {
-            if (array.Length < 2)
-                throw new ArgumentException("Ожидалось два или более параметров.");
-            int result = Euclid(array[0], array[1]);
-            for (int i = 2; i < array.Length; i++)
-            {
-                result = Euclid(result, array[i]);
-            }
-            return result;
+            return ParamsGCD(Euclid, array);
         }
 
         public static int Stein(int num1, int num2, out TimeSpan elapsedTime)
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            int result = Stein(num1, num2);
-            sw.Stop();
-            elapsedTime = sw.Elapsed;
-            return result;
+            return GCDTime(Stein, num1, num2, out elapsedTime);
         }
 
         public static int Stein(int num1, int num2)
@@ -93,17 +78,37 @@ namespace Task2
 
         public static int Stein(int num1, int num2, int num3)
         {
-            return Stein(Stein(num1, num2), num3);
+            return ThreeNumbersGCD(Stein, num1, num2, num3);
         }
 
         public static int Stein(params int[] array)
         {
+            return ParamsGCD(Stein, array);
+        }
+
+        private static int GCDTime(GCDDelegate function, int num1, int num2, out TimeSpan elapsedTime)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            int result = function(num1, num2);
+            sw.Stop();
+            elapsedTime = sw.Elapsed;
+            return result;
+        }
+
+        private static int ThreeNumbersGCD(GCDDelegate function, int num1, int num2, int num3)
+        {
+            return function(function(num1, num2), num3);
+        }
+
+        private static int ParamsGCD(GCDDelegate function, params int[] array)
+        {
             if (array.Length < 2)
                 throw new ArgumentException("Ожидалось два или более параметров.");
-            int result = Stein(array[0], array[1]);
+            int result = function(array[0], array[1]);
             for (int i = 2; i < array.Length; i++)
             {
-                result = Stein(result, array[i]);
+                result = function(result, array[i]);
             }
             return result;
         }
